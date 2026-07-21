@@ -1,0 +1,288 @@
+Delivered-To: ignaciovallejo10@gmail.com
+Received: by 2002:a05:6504:11d6:b0:306:bc7d:2879 with SMTP id o22csp2431976ltm;
+        Tue, 21 Jul 2026 08:17:40 -0700 (PDT)
+X-Received: by 2002:a05:6a00:1d9b:b0:845:e7ee:eae7 with SMTP id d2e1a72fcca58-84c2922a43dmr18331338b3a.5.1784647059589;
+        Tue, 21 Jul 2026 08:17:39 -0700 (PDT)
+ARC-Seal: i=2; a=rsa-sha256; t=1784647059; cv=pass;
+        d=google.com; s=arc-20260327;
+        b=nNqczwcIsBBUJsOxszdr1hB2P5qGXalVhQ6eni3tAZf47fHci2Uqp4JB5zXA2Xa7dP
+         YGpZYSGVVMBbRtqnqeaDbQ5mPVzopZ6nBNRtWwVf/DOQNUYMo264XLthmu9NzmwbqWrR
+         p1H4oz5q3JPtIGmaZBRpgp32rJ7F15yUFMlzCxt+zlq+T0wHUNETfqjAlCyQ60sxQPDO
+         0eCtFs1lrmZZaXqCDeGo+zfDjt2lG9x2iA5Mp8adVXNTEdmqBSXioW9Nt54N9C6AbL3b
+         dVqJQWe2Ln2qbLV7x8QvCZpzSkF5rKr2AIUucEA8FwsQX3Hxo9/+er8ODtssCuWQ5nMC
+         PT/Q==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=AIRLOVPO1B9Qyx++++E5B+ZO2R5ES1LQ/byFx1p4NTk=;
+        fh=5jKWGlVT+0E84VdYCECqCB+g/5U5o4g519NIXciSXvU=;
+        b=QiSzOmtsWN7XmvBovCFLMv+fBlTkZe2SFC8Ry7NN8nals3plg2CE5rDy1LVWLZ+o79
+         MZZwV86qKTF4nUJZ8lBL3yED0HVpCl8FkV8z7uiRHE0bs8qLD5SJl4lY2IKpu0O543Ye
+         aEP9GBZ4TTDOFNfo4iRa6aeF0rn9XkhgRVeQsTnE88qlKnmU3lKvFKq/QuJlXRSvsrGi
+         88O3TJ//YHO01n7/4y7wRdNPCIevSfCiq6EUZHy+4IOAiTtfRvHqukNm6caU3rEPAnR5
+         PYwEI86P3Rya+TCzvAVKGv486rV39+98CaurXpTuUZnJP1ZHXRFJ2+KzdsWBXxmP7NlG
+         g6AQ==;
+        dara=google.com
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@gmail.com header.s=20251104 header.b=OemnQSwe;
+       arc=pass (i=1);
+       spf=pass (google.com: domain of casarepososoporte@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=casarepososoporte@gmail.com;
+       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com;
+       dara=pass header.i=@gmail.com
+Return-Path: <casarepososoporte@gmail.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id 41be03b00d2f7-cb517f9025bsor4728973a12.3.2026.07.21.08.17.39
+        for <ignaciovallejo10@gmail.com>
+        (Google Transport Security);
+        Tue, 21 Jul 2026 08:17:39 -0700 (PDT)
+Received-SPF: pass (google.com: domain of casarepososoporte@gmail.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@gmail.com header.s=20251104 header.b=OemnQSwe;
+       arc=pass (i=1);
+       spf=pass (google.com: domain of casarepososoporte@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=casarepososoporte@gmail.com;
+       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com;
+       dara=pass header.i=@gmail.com
+ARC-Seal: i=1; a=rsa-sha256; t=1784647059; cv=none;
+        d=google.com; s=arc-20260327;
+        b=OqW+UvMZwPkjynVXlW9KrEhMoN6kLXQGZHn0QigrbgoyPXrbHa37mL3+329lg7rXpN
+         lglMRo4w1XkjlbEbOcqyly1CT6pezRngiwXHkVu2bWPkjs51QpSILH4N8ry4XybhcqRn
+         hYRZxe9VUB9X2aqRTjCrOMhcvANyFP9kOKtd5a5fHIINfv4Zk6Pgn1g4QEr1atoPXumP
+         8onPR3JiqnL2q2a8SI9OQ0CdevlS4GT7R4fgPIzUlOTmvc/UNmy5Ii7SgzaZHeV2ADK6
+         e/rHfCgcvtVSN0ZF95RWPoK3aw4V1WCzvcFWrIOHELVXHaReVA6ZwYRvbaNyZkyXvK2C
+         KIaA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=AIRLOVPO1B9Qyx++++E5B+ZO2R5ES1LQ/byFx1p4NTk=;
+        fh=5jKWGlVT+0E84VdYCECqCB+g/5U5o4g519NIXciSXvU=;
+        b=qQtfHGy4y60iU4YHT15MBYOooHDvi9RvQc3wI+W4HkUNv8KxFFpKy/pA31OufA3KWd
+         ZNwLe15zvlYdo7wTQoysa7aeObzqLnF6Z8LxxlHGOMku9tH6x5IwGCcU0uUsbr32lrQt
+         EcdGXDkz/jQ0ejSvZde9NCWLYliXoP3hCRn7AoNkCte5SMGfcQtR6biVen9QmxWT4Z81
+         qx6LW/BXOx+C26TBSfAi9ehc+qa0w6HhWREnoEC9mOOuJbfyWaFuHpCIh8LaIAKHjjOa
+         LOHn1vtwwxPqGXvDM1KSWYI74kSxUKJCoxystPO4j1ZtQ0c6EWHRWgFg2JWdzhFOSxzi
+         GgxQ==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784647059; x=1785251859; dara=google.com;
+        h=content-type:to:subject:message-id:date:from:mime-version:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=AIRLOVPO1B9Qyx++++E5B+ZO2R5ES1LQ/byFx1p4NTk=;
+        b=OemnQSwe8o4XyzRARDMi4z2oMHh17RY4be5UA0ubfaF1OlqGq683/wq4ZM+PXtQHi0
+         qrAKUKOsQWnPBaMdWwchc9zAOIIdOYA26vkk15/2DYzATwsqvhTUPuNFLNeTtvy3Aah+
+         blu/UWyHS0hgYRCaeiNpwnZIn9iEjrM8LCVonixS8bGPvjnVfDoi8mPLvTrA3kueMvMs
+         qXe3yNrkIT9QbalK6F9zNNc2gCD4GFvqde3q3pc7OMVdr1AFhzA8v5C8bGsvm7sputbJ
+         p0kwwJ1v2VWwQAmOw8T/th1l4UdWo9nQJy0dQ2a9ZkerWEx4keoGC82R5F+3q+K/1e8K
+         ROVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784647059; x=1785251859;
+        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=AIRLOVPO1B9Qyx++++E5B+ZO2R5ES1LQ/byFx1p4NTk=;
+        b=G5pZStLyPf2TnV0TLBh9bgEOXC1O404gU4kCAIstrGDIWlKRRHc836JMuO7UY7lAdS
+         CgWB5W3Vle2terzu/D86gGkLHrXyFhGjSJeRBiqcxITZPX8Iaq2m0584KGC1qN0hEroT
+         eUba/ILcLZj4oU9tQBQdiCwPPvfmgrwS8Z+D6YevNxl4rt0/ZYaOv4O4a8j3iT7iLHCn
+         u8rFaYVsn156wO3VKtzprjGDkTesTuVOwEs8ezmSh5juyUnhWRd/moTBpsmVfShjxUiF
+         qLk6TWZBs5FDX9vxRbmaXsJfMiNzdoJBkZAZVzlMI2BHVThu0oskPRDAdcaMGlz5ju4b
+         EW0A==
+X-Gm-Message-State: AOJu0Yz4sdaUFhXmjV5ZpOdk7jE2qEK0wUsMY1AEKXVsCZu/s2JRg3TB
+	8mf3A2jNv646ETAbjoGuRwI+VipUoFfBV8QvHju1pVs1mym1f/fAjNZjwLV6ZZih18D2ImzI/SZ
+	bH25ZhNLhQg4qzBuifEmcJ+Nwe+DWxb/eKg==
+X-Gm-Gg: AfdE7ckcxP1J8sp3ah+5DRJQSGvEzw5RU0k5pacN89m2Qgl0onRZWQhBgi5AIABMfC4
+	z2M76HyHRGDk8DI9UXqXJSD/BVB0JO4ULpfilSnTNm4qPqrstUoazhUIKYn4+NqQt96IPL/WWMD
+	zY51sAtXyN67/t9DRARb6WB37TflRvcaUoY8QBahF8PuZoiDhLDpwqTmrcEPtcAr7T1D5E+aAvl
+	oa5P1UUIvQmBMUg4KwW106LlVFw/tc7yurkhxG0ioRMCBYkhWJrLyVzeWI=
+X-Received: by 2002:a05:6300:392:b0:3c3:d199:86cb with SMTP id
+ adf61e73a8af0-3c3d1998bf4mr11018666637.31.1784647058766; Tue, 21 Jul 2026
+ 08:17:38 -0700 (PDT)
+Received: from 498586711441 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 21 Jul 2026 10:17:37 -0500
+Received: from 498586711441 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 21 Jul 2026 10:17:37 -0500
+MIME-Version: 1.0
+From: Casa Reposo <casarepososoporte@gmail.com>
+Date: Tue, 21 Jul 2026 10:17:37 -0500
+X-Gm-Features: AUfX_mxEZKouhSXaOyjdGr1CbQr5sL-Yevviflzi_C3UUQvEMnb8w9HvfWDjKQ8
+Message-ID: <CAHaDGFKzYc2Lgbk19PJ7e118SYWFGMDmRyGFfSaZD5MDySZpRg@mail.gmail.com>
+Subject: =?UTF-8?Q?=5BCasa_Reposo=5D_Aprobaci=C3=B3n_requerida_=2D_Lucas_prueba?=
+To: ignaciovallejo10@gmail.com
+Content-Type: multipart/alternative; boundary="000000000000fcc08c06572085ae"
+
+--000000000000fcc08c06572085ae
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+
+IE15IGZvcm0NCg0KU2UgZ2VuZXLDsyBhdXRvbcOhdGljYW1lbnRlIHVuYSByZXNwdWVzdGEgY29t
+ZXJjaWFsIHBhcmEgdW4gbnVldm8gbGVhZC4NCuKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKU
+geKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgSDwn5GkIENMSUVOVEUgTm9tYnJl
+OiBMdWNhcyBwcnVlYmEgRW1haWw6DQppZ25hY2lvdmFsbGVqbzEwQGdtYWlsLmNvbSBBc3VudG86
+IGNvbnN1bHRhIGNvbWVyY2lhbA0K4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB
+4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSBIPCfpJYgQU7DgUxJU0lTIElBIFByb2R1Y3Rv
+OiBBbG1vaGFkYSBpbnRlbGlnZW50ZQ0KSW50ZW5jacOzbjogQ29tcHJhciBQcmlvcmlkYWQ6IEFs
+dGEgU2VudGltaWVudG86IE5ldXRyYWwgUHJvYmFiaWxpZGFkIGRlDQpjb21wcmE6IDAuOSDilIHi
+lIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHi
+lIHilIEg8J+TnSBSRVNVTUVOIEVsIGNsaWVudGUgTHVjYXMgcHJ1ZWJhDQptYW5pZmllc3RhIGlu
+dGVyw6lzIGRpcmVjdG8gZW4gbGEgY29tcHJhIGRlIDMgdW5pZGFkZXMgZGUgYWxtb2hhZGFzIHkN
+CmNvbnN1bHRhIHBvciBsYSBkaXNwb25pYmlsaWRhZCBkZSBzdG9jay4g4pSB4pSB4pSB4pSB4pSB
+4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSBIPCfk6cN
+ClJFU1BVRVNUQSBQUk9QVUVTVEEgSG9sYSBMdWNhcywgwqFtdWNoYXMgZ3JhY2lhcyBwb3IgY29u
+dGFjdGFydGUgY29uIENhc2ENClJlcG9zbyEgVW4gYXNlc29yIGRlIG51ZXN0cm8gZXF1aXBvIGNv
+bWVyY2lhbCB2ZXJpZmljYXLDoSBsYSBkaXNwb25pYmlsaWRhZA0KZGUgc3RvY2sgZGUgbGFzIDMg
+YWxtb2hhZGFzIHF1ZSBzb2xpY2l0w6FzIHkgdGUgY29uZmlybWFyw6EgbG9zIGRldGFsbGVzIGEg
+bGENCmJyZXZlZGFkIHBhcmEgcXVlIHB1ZWRhcyBhdmFuemFyIGNvbiB0dSBjb21wcmEuIFNhbHVk
+b3MgY29yZGlhbGVzLg0K4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB
+4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSBIFNlbGVjY2lvbsOhIEFwcm9iYXIgbyBSZWNoYXphci4N
+ClJlY2hhemFyDQo8aHR0cHM6Ly9pZ25hY2lvdmFsbGVqby5hcHAubjhuLmNsb3VkL3dlYmhvb2st
+d2FpdGluZy8zNS9lZDk5MjMzNi01NzA1LTRkYzUtYjdhOC03YjE3NGE0N2NjZjQ/YXBwcm92ZWQ9
+ZmFsc2Umc2lnbmF0dXJlPWJiMDgzZTliYWNjNjQ3M2ZkODFjYTY1NzllM2ZlOWRlNjJjOWFjMzQx
+MGI2MTc5OGRlZjk5NGIxYzUyNWM4YjY+DQpBcHJvYmFyDQo8aHR0cHM6Ly9pZ25hY2lvdmFsbGVq
+by5hcHAubjhuLmNsb3VkL3dlYmhvb2std2FpdGluZy8zNS9lZDk5MjMzNi01NzA1LTRkYzUtYjdh
+OC03YjE3NGE0N2NjZjQ/YXBwcm92ZWQ9dHJ1ZSZzaWduYXR1cmU9NWE4YTFkMzAwNWNhMzEzNmM4
+ZjcwY2E2OGY0NTFjZDIwODFjYTI0ZWY4OTg0ODk2M2I3ZDI1OGQ2MDIxNGMwZj4NCkF1dG9tYXRl
+ZCB3aXRoIG44bg0KPGh0dHBzOi8vbjhuLmlvLz91dG1fc291cmNlPW44bi1pbnRlcm5hbCZ1dG1f
+bWVkaXVtPXNlbmQtYW5kLXdhaXQmdXRtX2NhbXBhaWduPTAwMzdjOTVhYTg0NDZmMGU0NzhmMGJl
+MmQwNmUxZTA2NTMxNzgyODNmOGYwM2JkMzY4OGIwOTJkYmUwNzMwZDc+DQo=
+--000000000000fcc08c06572085ae
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+
+
+<html lang=3D"en">
+
+<head>
+	<meta charset=3D"UTF-8">
+	<meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1=
+.0">
+	<title>My form</title>
+</head>
+
+<body style=3D"font-family:Arial,sans-serif;font-size:12px;background-color=
+:#fbfcfe;margin:0;padding:0">
+	<table width=3D"100%" cellpadding=3D"0" cellspacing=3D"0" style=3D"backgro=
+und-color:#fbfcfe;border:1px solid #dbdfe7;border-radius:8px">
+		<tr>
+			<td align=3D"center" style=3D"padding:24px 0">
+				<table width=3D"448" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" s=
+tyle=3D"width:100%;max-width:448px;background-color:#ffffff;border:1px soli=
+d #dbdfe7;border-radius:8px;padding:24px">
+					<tr>
+						<td style=3D"text-align:center;padding-top:8px;font-family:Arial,sans=
+-serif;font-size:14px;color:#7e8186">
+							<p style=3D"white-space:pre-line">Se gener=C3=B3 autom=C3=A1ticament=
+e una respuesta comercial para un nuevo lead.
+
+=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=
+=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=
+=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81
+
+=F0=9F=91=A4 CLIENTE
+
+Nombre:
+Lucas prueba
+
+Email:
+<a href=3D"mailto:ignaciovallejo10@gmail.com">ignaciovallejo10@gmail.com</a=
+>
+
+Asunto:
+consulta comercial
+
+=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=
+=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=
+=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81
+
+=F0=9F=A4=96 AN=C3=81LISIS IA
+
+Producto:
+Almohada inteligente
+
+Intenci=C3=B3n:
+Comprar
+
+Prioridad:
+Alta
+
+Sentimiento:
+Neutral
+
+Probabilidad de compra:
+0.9
+
+=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=
+=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=
+=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81
+
+=F0=9F=93=9D RESUMEN
+
+El cliente Lucas prueba manifiesta inter=C3=A9s directo en la compra de 3 u=
+nidades de almohadas y consulta por la disponibilidad de stock.
+
+=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=
+=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=
+=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81
+
+=F0=9F=93=A7 RESPUESTA PROPUESTA
+
+Hola Lucas, =C2=A1muchas gracias por contactarte con Casa Reposo! Un asesor=
+ de nuestro equipo comercial verificar=C3=A1 la disponibilidad de stock de =
+las 3 almohadas que solicit=C3=A1s y te confirmar=C3=A1 los detalles a la b=
+revedad para que puedas avanzar con tu compra. Saludos cordiales.
+
+=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=
+=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=
+=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81
+
+Seleccion=C3=A1 Aprobar o Rechazar.</p>
+						</td>
+					</tr>
+					<tr>
+						<td align=3D"center" style=3D"padding-top:12px">
+								<a href=3D"https://ignaciovallejo.app.n8n.cloud/webhook-waiting/35/=
+ed992336-5705-4dc5-b7a8-7b174a47ccf4?approved=3Dfalse&amp;signature=3Dbb083=
+e9bacc6473fd81ca6579e3fe9de62c9ac3410b61798def994b1c525c8b6" target=3D"_bla=
+nk" style=3D"display:inline-block;text-decoration:none;background-color:#ff=
+f;color:#4a4a4a;padding:12px 24px;font-family:Arial,sans-serif;font-size:14=
+px;font-weight:600;border:1px solid #d1d1d1;border-radius:6px;min-width:120=
+px;margin:12px 6px 0 6px">Rechazar</a>
+<a href=3D"https://ignaciovallejo.app.n8n.cloud/webhook-waiting/35/ed992336=
+-5705-4dc5-b7a8-7b174a47ccf4?approved=3Dtrue&amp;signature=3D5a8a1d3005ca31=
+36c8f70ca68f451cd2081ca24ef89848963b7d258d60214c0f" target=3D"_blank" style=
+=3D"display:inline-block;text-decoration:none;background-color:#ff6d5a;colo=
+r:#fff;padding:12px 24px;font-family:Arial,sans-serif;font-size:14px;font-w=
+eight:600;border-radius:6px;min-width:120px;margin:12px 2px 0 2px">Aprobar<=
+/a>
+						</td>
+					</tr>
+				</table>
+
+			=09
+				<table width=3D"100%" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" =
+style=3D"margin-bottom:24px">
+					<tr>
+						<td style=3D"border-top:0px solid #dbdfe7"></td>
+					</tr>
+				</table>
+
+			=09
+				<table width=3D"100%" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" =
+style=3D"text-align:center;color:#7e8186;font-family:Arial,sans-serif;font-=
+size:12px">
+					<tr>
+						<td>
+							<a href=3D"https://n8n.io/?utm_source=3Dn8n-internal&amp;utm_medium=
+=3Dsend-and-wait&amp;utm_campaign=3D0037c95aa8446f0e478f0be2d06e1e065317828=
+3f8f03bd3688b092dbe0730d7" target=3D"_blank" style=3D"color:#7e8186;text-de=
+coration:none">Automated with
+								n8n</a>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</body>
+
+</html>
+=09
+
+--000000000000fcc08c06572085ae--
