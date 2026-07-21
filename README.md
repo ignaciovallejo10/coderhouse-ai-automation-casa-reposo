@@ -6,3 +6,9 @@ La demostración completa del funcionamiento del proyecto puede visualizarse en 
 
 **Google Drive:**
 https://drive.google.com/file/d/1cZou4eFr7KLEmCN8pWnE7Hao4skterI5/view?usp=drive_link
+
+# 📊 Airtable (Read Only)
+
+Vista pública de la base de datos utilizada en el proyecto:
+
+https://airtable.com/appg9lXxgF5XyDJgr/shr7sFRa2xRBeIzVg
