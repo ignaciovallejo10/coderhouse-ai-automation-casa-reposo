@@ -1,0 +1,1843 @@
+{
+  "name": "Casa Reposo - AI Lead Processor",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 1
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "52c45209-d9db-4c13-8463-a2b521e4c1f6",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appg9lXxgF5XyDJgr",
+          "mode": "list",
+          "cachedResultName": "Casa Reposo - AI CRM",
+          "cachedResultUrl": "https://airtable.com/appg9lXxgF5XyDJgr"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblUiD6Rq59vPn2cb",
+          "mode": "list",
+          "cachedResultName": "Leads",
+          "cachedResultUrl": "https://airtable.com/appg9lXxgF5XyDJgr/tblUiD6Rq59vPn2cb"
+        },
+        "filterByFormula": "{Estado} = \"Nuevo\"",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "8fe16792-3e02-4644-9401-04c22803997a",
+      "name": "Search records",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "eszAm0k8fUPAaD8i",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const aiText = $input.first().json.content.parts[0].text;\nconst parsed = JSON.parse(aiText);\n\nconst airtableRecord = $('Search records').first().json;\n\nreturn [\n  {\n    json: {\n      record_id: airtableRecord.id,\n      nombre: airtableRecord.fields.Nombre,\n      email: airtableRecord.fields.Email,\n      asunto: airtableRecord.fields.Asunto,\n      mensaje: airtableRecord.fields.Mensaje,\n      ...parsed\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        768,
+        0
+      ],
+      "id": "8095bbf6-61c7-499f-bda8-45e8c2fc666f",
+      "name": "04 - Parse AI JSON"
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appg9lXxgF5XyDJgr",
+          "mode": "list",
+          "cachedResultName": "Casa Reposo - AI CRM",
+          "cachedResultUrl": "https://airtable.com/appg9lXxgF5XyDJgr"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblUiD6Rq59vPn2cb",
+          "mode": "list",
+          "cachedResultName": "Leads",
+          "cachedResultUrl": "https://airtable.com/appg9lXxgF5XyDJgr/tblUiD6Rq59vPn2cb"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $json.record_id }}",
+            "Producto detectado ": "={{ $json.producto_detectado }}",
+            "Intención ": "={{ $json.intencion }}",
+            "Sentimiento ": "={{ $json.sentimiento }}",
+            "Prioridad": "={{ $json.prioridad }}",
+            "Probabilidad compra": "={{ $json.probabilidad_compra }} ",
+            "Respuesta IA": "={{ $json.respuesta }}",
+            "Estado": "Esperando aprobación",
+            "Resumen IA": "={{ $json.resumen}} "
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Lead ID",
+              "displayName": "Lead ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Fecha ingreso",
+              "displayName": "Fecha ingreso",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Asunto",
+              "displayName": "Asunto",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Mensaje",
+              "displayName": "Mensaje",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Producto detectado ",
+              "displayName": "Producto detectado ",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Parches para dormir",
+                  "value": "Parches para dormir"
+                },
+                {
+                  "name": "Sabanas",
+                  "value": "Sabanas"
+                },
+                {
+                  "name": "Almohada inteligente",
+                  "value": "Almohada inteligente"
+                },
+                {
+                  "name": "Cortinas",
+                  "value": "Cortinas"
+                },
+                {
+                  "name": "Otro",
+                  "value": "Otro"
+                },
+                {
+                  "name": "",
+                  "value": ""
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Intención ",
+              "displayName": "Intención ",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Comprar",
+                  "value": "Comprar"
+                },
+                {
+                  "name": "Consulta",
+                  "value": "Consulta"
+                },
+                {
+                  "name": "Información",
+                  "value": "Información"
+                },
+                {
+                  "name": "Post venta",
+                  "value": "Post venta"
+                },
+                {
+                  "name": "Reclamo",
+                  "value": "Reclamo"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Sentimiento ",
+              "displayName": "Sentimiento ",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Postivo",
+                  "value": "Postivo"
+                },
+                {
+                  "name": "Negativo",
+                  "value": "Negativo"
+                },
+                {
+                  "name": "Neutral",
+                  "value": "Neutral"
+                },
+                {
+                  "name": "",
+                  "value": ""
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Prioridad",
+              "displayName": "Prioridad",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Alta",
+                  "value": "Alta"
+                },
+                {
+                  "name": "Media",
+                  "value": "Media"
+                },
+                {
+                  "name": "Baja",
+                  "value": "Baja"
+                },
+                {
+                  "name": "",
+                  "value": ""
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Probabilidad compra",
+              "displayName": "Probabilidad compra",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Respuesta IA",
+              "displayName": "Respuesta IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Nuevo",
+                  "value": "Nuevo"
+                },
+                {
+                  "name": "Procesando IA",
+                  "value": "Procesando IA"
+                },
+                {
+                  "name": "Procesado IA",
+                  "value": "Procesado IA"
+                },
+                {
+                  "name": "Esperando aprobación",
+                  "value": "Esperando aprobación"
+                },
+                {
+                  "name": "Aprobado",
+                  "value": "Aprobado"
+                },
+                {
+                  "name": "Enviado",
+                  "value": "Enviado"
+                },
+                {
+                  "name": "Error IA",
+                  "value": "Error IA"
+                },
+                {
+                  "name": "Error gmail",
+                  "value": "Error gmail"
+                },
+                {
+                  "name": "Revisión manual",
+                  "value": "Revisión manual"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha de envío ",
+              "displayName": "Fecha de envío ",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Responsable",
+              "displayName": "Responsable",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Resumen IA",
+              "displayName": "Resumen IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        976,
+        0
+      ],
+      "id": "1aa8b4b0-248a-4cf0-8047-0c31df53941c",
+      "name": "05 - Update Lead with AI Analysis",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "eszAm0k8fUPAaD8i",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "sendTo": "ignaciovallejo10@gmail.com",
+        "subject": "=[Casa Reposo] Aprobación requerida - {{$('04 - Parse AI JSON').first().json.nombre}}",
+        "message": "=Se generó automáticamente una respuesta comercial para un nuevo lead.\n\n━━━━━━━━━━━━━━━━━━━━━━\n\n👤 CLIENTE\n\nNombre:\n{{$('04 - Parse AI JSON').first().json.nombre}}\n\nEmail:\n{{$('04 - Parse AI JSON').first().json.email}}\n\nAsunto:\n{{$('04 - Parse AI JSON').first().json.asunto}}\n\n━━━━━━━━━━━━━━━━━━━━━━\n\n🤖 ANÁLISIS IA\n\nProducto:\n{{$('04 - Parse AI JSON').first().json.producto_detectado}}\n\nIntención:\n{{$('04 - Parse AI JSON').first().json.intencion}}\n\nPrioridad:\n{{$('04 - Parse AI JSON').first().json.prioridad}}\n\nSentimiento:\n{{$('04 - Parse AI JSON').first().json.sentimiento}}\n\nProbabilidad de compra:\n{{$('04 - Parse AI JSON').first().json.probabilidad_compra}}\n\n━━━━━━━━━━━━━━━━━━━━━━\n\n📝 RESUMEN\n\n{{$('04 - Parse AI JSON').first().json.resumen}}\n\n━━━━━━━━━━━━━━━━━━━━━━\n\n📧 RESPUESTA PROPUESTA\n\n{{$('04 - Parse AI JSON').first().json.respuesta}}\n\n━━━━━━━━━━━━━━━━━━━━━━\n\nSeleccioná Aprobar o Rechazar.",
+        "approvalOptions": {
+          "values": {
+            "approvalType": "double",
+            "approveLabel": "Aprobar",
+            "disapproveLabel": "Rechazar"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1184,
+        0
+      ],
+      "id": "ed992336-5705-4dc5-b7a8-7b174a47ccf4",
+      "name": "06 - Request Human Approval",
+      "webhookId": "552c1cf1-1380-47cc-9b57-029c04e0efd7",
+      "executeOnce": false,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "heuAr9ZZOvaQSIlG",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "0916cac0-5f86-400e-94ba-3b47ee0ddb71",
+              "leftValue": "={{$json.data.approved}}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1392,
+        0
+      ],
+      "id": "7c8042e0-694e-46dc-97b4-adabef54853b",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('04 - Parse AI JSON').first().json.email }}",
+        "subject": "=Re: {{ $('04 - Parse AI JSON').first().json.asunto }}",
+        "message": "=<p>Hola {{ $('04 - Parse AI JSON').first().json.nombre }},</p>\n\n<p>{{ $('04 - Parse AI JSON').first().json.respuesta }}</p>\n\n<br>\n\n<p>Saludos,</p>\n\n<p><strong>Equipo Casa Reposo</strong></p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1600,
+        -96
+      ],
+      "id": "c86cb1a9-ba54-4d43-bea1-881cf11f0b97",
+      "name": "08 - Send Customer Email",
+      "webhookId": "8e022c99-9873-4bf7-98bc-00b262dec4c5",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "heuAr9ZZOvaQSIlG",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appg9lXxgF5XyDJgr",
+          "mode": "list",
+          "cachedResultName": "Casa Reposo - AI CRM",
+          "cachedResultUrl": "https://airtable.com/appg9lXxgF5XyDJgr"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblUiD6Rq59vPn2cb",
+          "mode": "list",
+          "cachedResultName": "Leads",
+          "cachedResultUrl": "https://airtable.com/appg9lXxgF5XyDJgr/tblUiD6Rq59vPn2cb"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('04 - Parse AI JSON').first().json.record_id }}",
+            "Estado": "Enviado",
+            "FechaEnvio": "={{ $now.toISO() }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Lead ID",
+              "displayName": "Lead ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Fecha ingreso",
+              "displayName": "Fecha ingreso",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Asunto",
+              "displayName": "Asunto",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Mensaje",
+              "displayName": "Mensaje",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Producto detectado ",
+              "displayName": "Producto detectado ",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Parches para dormir",
+                  "value": "Parches para dormir"
+                },
+                {
+                  "name": "Sabanas",
+                  "value": "Sabanas"
+                },
+                {
+                  "name": "Almohada inteligente",
+                  "value": "Almohada inteligente"
+                },
+                {
+                  "name": "Cortinas",
+                  "value": "Cortinas"
+                },
+                {
+                  "name": "Otro",
+                  "value": "Otro"
+                },
+                {
+                  "name": "",
+                  "value": ""
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Intención ",
+              "displayName": "Intención ",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Comprar",
+                  "value": "Comprar"
+                },
+                {
+                  "name": "Consulta",
+                  "value": "Consulta"
+                },
+                {
+                  "name": "Información",
+                  "value": "Información"
+                },
+                {
+                  "name": "Post venta",
+                  "value": "Post venta"
+                },
+                {
+                  "name": "Reclamo",
+                  "value": "Reclamo"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Sentimiento ",
+              "displayName": "Sentimiento ",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Postivo",
+                  "value": "Postivo"
+                },
+                {
+                  "name": "Negativo",
+                  "value": "Negativo"
+                },
+                {
+                  "name": "Neutral",
+                  "value": "Neutral"
+                },
+                {
+                  "name": "",
+                  "value": ""
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Prioridad",
+              "displayName": "Prioridad",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Alta",
+                  "value": "Alta"
+                },
+                {
+                  "name": "Media",
+                  "value": "Media"
+                },
+                {
+                  "name": "Baja",
+                  "value": "Baja"
+                },
+                {
+                  "name": "",
+                  "value": ""
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Probabilidad compra",
+              "displayName": "Probabilidad compra",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Respuesta IA",
+              "displayName": "Respuesta IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Nuevo",
+                  "value": "Nuevo"
+                },
+                {
+                  "name": "Procesando IA",
+                  "value": "Procesando IA"
+                },
+                {
+                  "name": "Procesado IA",
+                  "value": "Procesado IA"
+                },
+                {
+                  "name": "Esperando aprobación",
+                  "value": "Esperando aprobación"
+                },
+                {
+                  "name": "Aprobado",
+                  "value": "Aprobado"
+                },
+                {
+                  "name": "Enviado",
+                  "value": "Enviado"
+                },
+                {
+                  "name": "Error IA",
+                  "value": "Error IA"
+                },
+                {
+                  "name": "Error gmail",
+                  "value": "Error gmail"
+                },
+                {
+                  "name": "Revisión manual",
+                  "value": "Revisión manual"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "FechaEnvio",
+              "displayName": "FechaEnvio",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Responsable",
+              "displayName": "Responsable",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Resumen IA",
+              "displayName": "Resumen IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        1808,
+        -96
+      ],
+      "id": "cfbde65d-7b45-4b1d-89a4-457bc63cd180",
+      "name": "09A - Mark Lead as Sent",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "eszAm0k8fUPAaD8i",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appg9lXxgF5XyDJgr",
+          "mode": "list",
+          "cachedResultName": "Casa Reposo - AI CRM",
+          "cachedResultUrl": "https://airtable.com/appg9lXxgF5XyDJgr"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblUiD6Rq59vPn2cb",
+          "mode": "list",
+          "cachedResultName": "Leads",
+          "cachedResultUrl": "https://airtable.com/appg9lXxgF5XyDJgr/tblUiD6Rq59vPn2cb"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Probabilidad compra": 0,
+            "id": "={{ $('04 - Parse AI JSON').first().json.record_id }}",
+            "Estado": "Revisión manual"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Lead ID",
+              "displayName": "Lead ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Fecha ingreso",
+              "displayName": "Fecha ingreso",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Asunto",
+              "displayName": "Asunto",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Mensaje",
+              "displayName": "Mensaje",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Producto detectado ",
+              "displayName": "Producto detectado ",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Parches para dormir",
+                  "value": "Parches para dormir"
+                },
+                {
+                  "name": "Sabanas",
+                  "value": "Sabanas"
+                },
+                {
+                  "name": "Almohada inteligente",
+                  "value": "Almohada inteligente"
+                },
+                {
+                  "name": "Cortinas",
+                  "value": "Cortinas"
+                },
+                {
+                  "name": "Otro",
+                  "value": "Otro"
+                },
+                {
+                  "name": "",
+                  "value": ""
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Intención ",
+              "displayName": "Intención ",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Comprar",
+                  "value": "Comprar"
+                },
+                {
+                  "name": "Consulta",
+                  "value": "Consulta"
+                },
+                {
+                  "name": "Información",
+                  "value": "Información"
+                },
+                {
+                  "name": "Post venta",
+                  "value": "Post venta"
+                },
+                {
+                  "name": "Reclamo",
+                  "value": "Reclamo"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Sentimiento ",
+              "displayName": "Sentimiento ",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Postivo",
+                  "value": "Postivo"
+                },
+                {
+                  "name": "Negativo",
+                  "value": "Negativo"
+                },
+                {
+                  "name": "Neutral",
+                  "value": "Neutral"
+                },
+                {
+                  "name": "",
+                  "value": ""
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Prioridad",
+              "displayName": "Prioridad",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Alta",
+                  "value": "Alta"
+                },
+                {
+                  "name": "Media",
+                  "value": "Media"
+                },
+                {
+                  "name": "Baja",
+                  "value": "Baja"
+                },
+                {
+                  "name": "",
+                  "value": ""
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Probabilidad compra",
+              "displayName": "Probabilidad compra",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Respuesta IA",
+              "displayName": "Respuesta IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Nuevo",
+                  "value": "Nuevo"
+                },
+                {
+                  "name": "Procesando IA",
+                  "value": "Procesando IA"
+                },
+                {
+                  "name": "Procesado IA",
+                  "value": "Procesado IA"
+                },
+                {
+                  "name": "Esperando aprobación",
+                  "value": "Esperando aprobación"
+                },
+                {
+                  "name": "Aprobado",
+                  "value": "Aprobado"
+                },
+                {
+                  "name": "Enviado",
+                  "value": "Enviado"
+                },
+                {
+                  "name": "Error IA",
+                  "value": "Error IA"
+                },
+                {
+                  "name": "Error gmail",
+                  "value": "Error gmail"
+                },
+                {
+                  "name": "Revisión manual",
+                  "value": "Revisión manual"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha de envío ",
+              "displayName": "Fecha de envío ",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Responsable",
+              "displayName": "Responsable",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Resumen IA",
+              "displayName": "Resumen IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        1600,
+        96
+      ],
+      "id": "74f7efe6-dd19-4798-b6ee-650a6283e41a",
+      "name": "08B - Mark Lead for Manual Review",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "eszAm0k8fUPAaD8i",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appg9lXxgF5XyDJgr",
+          "mode": "list",
+          "cachedResultName": "Casa Reposo - AI CRM",
+          "cachedResultUrl": "https://airtable.com/appg9lXxgF5XyDJgr"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl3Zq0dojkpWgbDs",
+          "mode": "list",
+          "cachedResultName": "Logs",
+          "cachedResultUrl": "https://airtable.com/appg9lXxgF5XyDJgr/tbl3Zq0dojkpWgbDs"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Resultado": "OK",
+            "Lead": "={{ $('04 - Parse AI JSON').first().json.record_id }}",
+            "Nodo": "09A - Mark Lead as Sent",
+            "Evento": "Respuesta aprobada y enviada",
+            "Fecha": "={{ $now.toISO() }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Log ID",
+              "displayName": "Log ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Lead",
+              "displayName": "Lead",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Nodo",
+              "displayName": "Nodo",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Evento",
+              "displayName": "Evento",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Resultado",
+              "displayName": "Resultado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "OK",
+                  "value": "OK"
+                },
+                {
+                  "name": "Advertencia",
+                  "value": "Advertencia"
+                },
+                {
+                  "name": "Error",
+                  "value": "Error"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Error",
+              "displayName": "Error",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        2016,
+        -96
+      ],
+      "id": "38951a07-2f6d-45eb-8fb0-52a145db8211",
+      "name": "10A - Log Successful Execution",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "eszAm0k8fUPAaD8i",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appg9lXxgF5XyDJgr",
+          "mode": "list",
+          "cachedResultName": "Casa Reposo - AI CRM",
+          "cachedResultUrl": "https://airtable.com/appg9lXxgF5XyDJgr"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl3Zq0dojkpWgbDs",
+          "mode": "list",
+          "cachedResultName": "Logs",
+          "cachedResultUrl": "https://airtable.com/appg9lXxgF5XyDJgr/tbl3Zq0dojkpWgbDs"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Lead": "={{ $('04 - Parse AI JSON').first().json.record_id }}",
+            "Nodo": "08B - Mark Lead for Manual Review",
+            "Evento": "Respuesta rechazada por operador",
+            "Resultado": "Advertencia",
+            "Error": "Requiere revisión manual"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Log ID",
+              "displayName": "Log ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Lead",
+              "displayName": "Lead",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Nodo",
+              "displayName": "Nodo",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Evento",
+              "displayName": "Evento",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Resultado",
+              "displayName": "Resultado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "OK",
+                  "value": "OK"
+                },
+                {
+                  "name": "Advertencia",
+                  "value": "Advertencia"
+                },
+                {
+                  "name": "Error",
+                  "value": "Error"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Error",
+              "displayName": "Error",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        1808,
+        96
+      ],
+      "id": "9cde533b-7195-4ba6-b3fe-47ea1bc0c58f",
+      "name": "09B - Log Rejected Execution",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "eszAm0k8fUPAaD8i",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "models/gemini-3-flash-preview"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Eres el asistente de análisis comercial de Casa Reposo, una marca argentina especializada en productos para el descanso.\n\nAnaliza exclusivamente la información proporcionada. No inventes precios, promociones, stock, características, tiempos de envío, beneficios médicos ni datos que no estén presentes en la consulta o en el contexto recibido.\n\nDATOS DEL CLIENTE\n\nNombre:\n{{ $json.fields.Nombre }}\n\nEmail:\n{{ $json.fields.Email }}\n\nAsunto:\n{{ $json.fields.Asunto }}\n\nMensaje:\n{{ $json.fields.Mensaje }}\n\nTAREAS\n\n1. Detectar el producto mencionado.\n2. Clasificar la intención comercial.\n3. Detectar el sentimiento.\n4. Determinar la prioridad.\n5. Estimar la probabilidad de compra como decimal entre 0 y 1.\n6. Crear un resumen interno breve.\n7. Redactar un borrador de respuesta cálido, profesional y prudente para revisión humana.\n\nVALORES PERMITIDOS\n\nproducto_detectado:\n- Parches para Dormir\n- Almohada inteligente\n- Sábanas\n- Cortinas\n- Otro\n\nintencion:\n- Comprar\n- Consulta\n- Información\n- Post Venta\n- Reclamo\n\nprioridad:\n- Alta\n- Media\n- Baja\n\nsentimiento:\n- Positivo\n- Neutral\n- Negativo\n\nREGLAS DE SEGURIDAD\n\n- No diagnostiques ni prometas resultados médicos.\n- No inventes precios, stock, promociones ni plazos.\n- Si falta información comercial, indicá en la respuesta que el equipo confirmará los detalles.\n- La respuesta es solo un borrador y será revisada por una persona antes de enviarse.\n- Usá exactamente los valores permitidos.\n- Devolvé únicamente JSON válido, sin Markdown ni explicaciones.\n\nFORMATO EXACTO\n\n{\n  \"producto_detectado\": \"\",\n  \"intencion\": \"\",\n  \"prioridad\": \"\",\n  \"sentimiento\": \"\",\n  \"probabilidad_compra\": 0,\n  \"resumen\": \"\",\n  \"respuesta\": \"\"\n}"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "59250f60-45a1-4741-9a17-6c1b6077e460",
+      "name": "03 - Analyze Lead with Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "QF3knqNrH4gJSdeG",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appg9lXxgF5XyDJgr",
+          "mode": "list",
+          "cachedResultName": "Casa Reposo - AI CRM",
+          "cachedResultUrl": "https://airtable.com/appg9lXxgF5XyDJgr"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl3Zq0dojkpWgbDs",
+          "mode": "list",
+          "cachedResultName": "Logs",
+          "cachedResultUrl": "https://airtable.com/appg9lXxgF5XyDJgr/tbl3Zq0dojkpWgbDs"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Evento": "Fallo durante procesamiento IA",
+            "Resultado": "Error",
+            "Error": "Error durante procesamiento con Google Gemini",
+            "Nodo": "03 - Analyze Lead with Gemini"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Log ID",
+              "displayName": "Log ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Lead",
+              "displayName": "Lead",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Nodo",
+              "displayName": "Nodo",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Evento",
+              "displayName": "Evento",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Resultado",
+              "displayName": "Resultado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "OK",
+                  "value": "OK"
+                },
+                {
+                  "name": "Advertencia",
+                  "value": "Advertencia"
+                },
+                {
+                  "name": "Error",
+                  "value": "Error"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Error",
+              "displayName": "Error",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        688,
+        112
+      ],
+      "id": "e98bf840-1beb-41e1-80a3-d61984705583",
+      "name": "03B - Log AI Error",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "eszAm0k8fUPAaD8i",
+          "name": "Airtable account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Search records",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search records": {
+      "main": [
+        [
+          {
+            "node": "03 - Analyze Lead with Gemini",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "04 - Parse AI JSON": {
+      "main": [
+        [
+          {
+            "node": "05 - Update Lead with AI Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "05 - Update Lead with AI Analysis": {
+      "main": [
+        [
+          {
+            "node": "06 - Request Human Approval",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "06 - Request Human Approval": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "08 - Send Customer Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "08B - Mark Lead for Manual Review",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "08 - Send Customer Email": {
+      "main": [
+        [
+          {
+            "node": "09A - Mark Lead as Sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "09A - Mark Lead as Sent": {
+      "main": [
+        [
+          {
+            "node": "10A - Log Successful Execution",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "08B - Mark Lead for Manual Review": {
+      "main": [
+        [
+          {
+            "node": "09B - Log Rejected Execution",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "03 - Analyze Lead with Gemini": {
+      "main": [
+        [
+          {
+            "node": "04 - Parse AI JSON",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "03B - Log AI Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "84985ab0-200e-4ab7-b299-a4b77f970871",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0037c95aa8446f0e478f0be2d06e1e0653178283f8f03bd3688b092dbe0730d7"
+  },
+  "nodeGroups": [],
+  "id": "nilVeV0TDuK8SAhQ",
+  "tags": []
+}
